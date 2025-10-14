@@ -22,9 +22,6 @@ model User{
   email String @unique
   password  String
   confirmpassword String
-  otp Int
   createdat DateTime
   updatedat DateTime
-
-  
 }
