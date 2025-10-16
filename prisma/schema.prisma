@@ -22,6 +22,17 @@ model User{
   email String @unique
   password  String
   confirmpassword String
+  otps  Otp[]
   createdat DateTime
   updatedat DateTime
+}
+
+model Otp {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  codeHash   String
+  expiresAt  DateTime
+  attempts   Int      @default(0)
+  createdAt  DateTime @default(now())
 }
