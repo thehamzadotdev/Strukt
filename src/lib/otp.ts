@@ -4,7 +4,7 @@ import { ota } from "zod/v4/locales";
 
 export  const generateotp =()=>{
 const otp = Math.floor(Math.random()*90000)
-return otp
+return otp.toString()
 }
 
 export  const hashotp = async (otp: string) => {

@@ -22,6 +22,7 @@ model User{
   email String @unique
   password  String
   confirmpassword String
+  isVerified Boolean @default(false)
   otps  Otp[]
   createdat DateTime
   updatedat DateTime
