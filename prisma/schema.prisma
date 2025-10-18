@@ -23,17 +23,8 @@ model User{
   password  String
   confirmpassword String
   isVerified Boolean @default(false)
-  otps  Otp[]
+  otp    String
+  expiresAt DateTime
   createdat DateTime
   updatedat DateTime
-}
-
-model Otp {
-  id         String   @id @default(cuid())
-  userId     String
-  user       User     @relation(fields: [userId], references: [id])
-  codeHash   String
-  expiresAt  DateTime
-  attempts   Int      @default(0)
-  createdAt  DateTime @default(now())
 }

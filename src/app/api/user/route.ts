@@ -2,6 +2,8 @@ import { db } from "@/db";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs"
 import z, { date } from "zod";
+import { generateotp } from "@/lib/otp";
+import { sendotpEmail } from "@/lib/mailer";
 
 const signupSchema = z
   .object({
@@ -56,6 +58,10 @@ export async function POST(req: Request) {
     }
     const hashpassword = await bcrypt.hash(password,10)
 
+    const otp= generateotp()
+    const expiresAt = new Date(Date.now() + 5 * 60 * 1000); 
+
+
 
  const newUser = await db.user.create({
    data: {
@@ -65,10 +71,15 @@ export async function POST(req: Request) {
      email,
      password: hashpassword,
      confirmpassword: hashpassword,
+     otp,
+     expiresAt,
      createdat: new Date(),
      updatedat: new Date(),
    },
  });
+
+  sendotpEmail(email, otp);
+
    const { password: _, ...userWithoutPassword } = newUser;
 
    return NextResponse.json(
