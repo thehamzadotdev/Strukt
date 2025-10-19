@@ -11,6 +11,9 @@ export async function POST (req:Request) {
             }
         })
 
+        if (user?.isVerified === true) return NextResponse.json({ error: "user is already verified" }, { status: 400 });
+
+
         if(!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
         if(user.otp !== otp) return NextResponse.json({ error: "invalid otp" }, { status: 400 });
@@ -25,7 +28,7 @@ export async function POST (req:Request) {
 
           return NextResponse.json(
             { user: verifiedUser, message: "User verified successfully" },
-            { status: 201 }
+            { status: 200 }
           );
         
     } catch (error) {

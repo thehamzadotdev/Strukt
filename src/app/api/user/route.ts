@@ -78,7 +78,7 @@ export async function POST(req: Request) {
    },
  });
 
-  sendotpEmail(email, otp);
+  sendotpEmail(email, otp, firstname);
 
    const { password: _, ...userWithoutPassword } = newUser;
 
