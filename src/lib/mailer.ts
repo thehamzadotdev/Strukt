@@ -23,6 +23,7 @@ export const sendotpEmail = async(to: string, otp:string)=>{
   await transporter.sendMail({
     from: process.env.EMAIL_FROM,
     to,
-    subject:"your otp for verification"
+    subject:"your otp for verification",
+    html: html
   });
 }

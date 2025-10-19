@@ -16,12 +16,17 @@ export async function POST (req:Request) {
         if(user.otp !== otp) return NextResponse.json({ error: "invalid otp" }, { status: 400 });
         if (new Date() > new Date(user.expiresAt)) return NextResponse.json({ error: "OTP expired" }, { status: 400 });
 
-        await db.user.update({
+       const verifiedUser= await db.user.update({
             where:{email},
             data:{
                 isVerified: true
             }
         })
+
+          return NextResponse.json(
+            { user: verifiedUser, message: "User verified successfully" },
+            { status: 201 }
+          );
         
     } catch (error) {
             console.error("otp error:", error);
